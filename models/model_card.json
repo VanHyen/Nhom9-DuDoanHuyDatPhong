@@ -1,0 +1,165 @@
+{
+  "source": "HotelBooking_Hocmaycb.ipynb • output đã lưu, không chạy lại Test",
+  "notebook_sha256": "f48e9d805cd63ea9a49043cbbd9b7a92d1ae489136eacaf541dbb71ee746ca7b",
+  "model_sha256": "50e34e7649e6df3aaca3e5fe65d37939fdf7379715157f62738a46553c8e7ce9",
+  "test": {
+    "roc_auc": 0.8898,
+    "average_precision": 0.8499,
+    "log_loss": 0.3877,
+    "brier": 0.1259,
+    "n": 17882
+  },
+  "validation_brier": 0.1262,
+  "baselines": [
+    {
+      "model": "Dummy • most_frequent",
+      "roc_auc": 0.5,
+      "ap": 0.3708,
+      "log_loss": 13.3644
+    },
+    {
+      "model": "Lead-time only",
+      "roc_auc": 0.688,
+      "ap": 0.5464,
+      "log_loss": 0.6166
+    },
+    {
+      "model": "Full Logistic",
+      "roc_auc": 0.8889,
+      "ap": 0.8521,
+      "log_loss": 0.3862
+    }
+  ],
+  "thresholds": [
+    {
+      "threshold": 0.3,
+      "tn": 8492,
+      "fp": 2759,
+      "fn": 1109,
+      "tp": 5521,
+      "precision": 0.6668,
+      "recall": 0.8327,
+      "f1": 0.7406
+    },
+    {
+      "threshold": 0.5,
+      "tn": 10199,
+      "fp": 1052,
+      "fn": 2314,
+      "tp": 4316,
+      "precision": 0.804,
+      "recall": 0.651,
+      "f1": 0.7195
+    },
+    {
+      "threshold": 0.7,
+      "tn": 10950,
+      "fp": 301,
+      "fn": 3384,
+      "tp": 3246,
+      "precision": 0.9151,
+      "recall": 0.4896,
+      "f1": 0.6379
+    }
+  ],
+  "odds_ratios": [
+    {
+      "feature": "cat__deposit_type_Non Refund",
+      "beta": 2.8365499371399263,
+      "odds_ratio": 17.056816817011313
+    },
+    {
+      "feature": "cat__country_ARE",
+      "beta": 2.4658361273225458,
+      "odds_ratio": 11.773322033939733
+    },
+    {
+      "feature": "num__previous_cancellations",
+      "beta": 1.9150307335566787,
+      "odds_ratio": 6.787147386972845
+    },
+    {
+      "feature": "cat__country_HKG",
+      "beta": 1.7382987120902533,
+      "odds_ratio": 5.6876588416555265
+    },
+    {
+      "feature": "cat__country_NGA",
+      "beta": 1.5496679731701037,
+      "odds_ratio": 4.709906107753639
+    },
+    {
+      "feature": "num__required_car_parking_spaces",
+      "beta": -3.0594344839856285,
+      "odds_ratio": 0.04691421846146441
+    },
+    {
+      "feature": "cat__deposit_type_No Deposit",
+      "beta": -1.8591126779361855,
+      "odds_ratio": 0.15581082342946403
+    },
+    {
+      "feature": "cat__country_NZL",
+      "beta": -1.8400155985217022,
+      "odds_ratio": 0.15881494880917402
+    },
+    {
+      "feature": "cat__country_SRB",
+      "beta": -1.353061929776985,
+      "odds_ratio": 0.25844769917542565
+    },
+    {
+      "feature": "cat__country_ISL",
+      "beta": -1.2562537822899453,
+      "odds_ratio": 0.28471864914638984
+    }
+  ],
+  "resources": [
+    {
+      "model": "Logistic • toàn pipeline",
+      "roc_auc": 0.8898,
+      "brier": 0.1259,
+      "latency_ms": 0.0147,
+      "size_mb": 0.009
+    },
+    {
+      "model": "Decision Tree • classifier",
+      "roc_auc": 0.9077,
+      "brier": 0.1158,
+      "latency_ms": 0.0005,
+      "size_mb": 0.016
+    },
+    {
+      "model": "Random Forest • classifier",
+      "roc_auc": 0.9092,
+      "brier": 0.1395,
+      "latency_ms": 0.0166,
+      "size_mb": 1.969
+    }
+  ],
+  "splits": [
+    {
+      "strategy": "Stratified 70/15/15",
+      "train": 83446,
+      "validation": 17881,
+      "test": 17882,
+      "roc_auc": 0.8898
+    },
+    {
+      "strategy": "Temporal • sắp xếp ngày đến, cắt 70/30",
+      "train": 83446,
+      "validation": null,
+      "test": 35763,
+      "roc_auc": null
+    }
+  ],
+  "notes": [
+    "P99/min/max trong JSON được tính từ toàn bộ df_clean ở bước 4, trước split; chưa phải riêng Train. Cần xuất lại từ X_train để tách biệt thống kê giữ riêng.",
+    "Notebook chỉ tạo Temporal Split, chưa fit và báo cáo điểm số Temporal. Không có kết quả để so sánh hiệu năng.",
+    "Latency là thời gian dự đoán theo batch chia số mẫu. Logistic gồm tiền xử lý; Tree/Forest chỉ đo classifier trên dữ liệu đã biến đổi. Không phải latency HTTP và chưa so sánh chi phí đầu-cuối ngang bằng.",
+    "Dummy dùng most_frequent nên Log Loss 13.3644; không phải baseline prior.",
+    "Brier nhỏ và Sigmoid không tự chứng minh xác suất đã hiệu chuẩn. Hệ số và đóng góp cục bộ không mang ý nghĩa nhân quả.",
+    "Bước 8 và 9 đều tính điểm trên Test. Notebook không chứng minh Test chỉ được truy cập một lần.",
+    "KPI cũ được yêu cầu (0.8895 / 0.8505 / 0.3899 / 0.1264) khác output mới; giao diện dùng output notebook mới."
+  ]
+}

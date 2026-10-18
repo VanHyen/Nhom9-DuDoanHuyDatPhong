@@ -1,0 +1,46 @@
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+dist/
+.env
+.env.*
+*.pem
+*.key
+*.log
+*.sqlite*
+*.db
+*.tmp
+*.bak
+*.swp
+~$*
+.DS_Store
+Thumbs.db
+data/raw/
+data/processed/
+*.csv
+*.parquet
+*.feather
+*.zip
+*.pkl
+*.joblib
+!models/README.md
+.ipynb_checkpoints/
+node_modules/
+
+# Ship only the trusted, checksum-verified serving model.
+!models/logistic_pipeline.pkl
+# Older report snapshot: retained locally until updated from the new notebook.
+/reports/Bao_Cao_Ky_Thuat_Project13.docx
+/reports/create_report.py
+# Duplicate images outside the serving / reporting directories.
+/app/roc_pr_test_curves.png
+/app/calibration_and_distribution.png
